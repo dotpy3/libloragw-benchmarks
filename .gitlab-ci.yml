@@ -1,10 +1,15 @@
 stages:
   - build
 
+before_script:
+  - git clone git@github.com:TheThingsNetwork/lora_gateway.git
+
 multitech-conduit-golang:
   stage: build
   image: registry.gitlab.com/thethingsnetwork/packet_forwarder/multitech-toolchain
   script:
+    - export CFG_SPI=ftdi
+    - export PLATFORM=multitech
     - pushd go
     # Creating release path
     - mkdir release
@@ -13,13 +18,17 @@ multitech-conduit-golang:
     - export GOPATH=$PWD/gopath
     - export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
     # Downloading go if not installed yet
-    - apt update -y && apt install make git tar -y
-    - "([[ ! $(go version) =~ \"version\" ]] && apt-get install wget -y && wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz && tar -C $PWD -xvzf go1.8.1.linux-amd64.tar.gz) || echo \"Expected Go toolset available in cache\""
+    - apt update -y && apt install make git tar wget libftdi-dev -y
+    - apt-get install wget -y && wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz && tar -C $PWD -xvzf go1.8.1.linux-amd64.tar.gz
     # Enable mLinux toolchain
     - sdk_enable_file=$(ls /opt/mlinux/*/*setup*)
     - source $sdk_enable_file
+    # Compile libloragw
+    - pushd ../lora_gateway/libloragw
+    - make all
+    - popd
     # Go to packet forwarder file
-    - go build -o benchmark
+    - CGO_ENABLED=1 GOARCH=arm GOARM=5 go build -o benchmark -v
     - cp benchmark release
     - popd
   artifacts:

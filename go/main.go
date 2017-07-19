@@ -7,7 +7,7 @@ import (
 )
 
 // #cgo CFLAGS: -I${SRCDIR}/../lora_gateway/libloragw/inc
-// #cgo LDFLAGS: -lm ${SRCDIR}/../lora_gateway/libloragw/libloragw.a
+// #cgo LDFLAGS: -lm ${SRCDIR}/../lora_gateway/libloragw/libloragw.a -lmpsse -lrt
 // #include "config.h"
 // #include "loragw_hal.h"
 // #include "loragw_gps.h"

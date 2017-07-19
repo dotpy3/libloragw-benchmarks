@@ -22,4 +22,4 @@ Every program is:
 
 ## Run benchmarks
 
-+ Compile `libloragw`, copy it to the current folder
+1. Move to the directory of the repository, and download the `libloragw` source code: `git clone git@github.com:TheThingsNetwork/lora_gateway.git`
