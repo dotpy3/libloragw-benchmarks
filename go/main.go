@@ -146,7 +146,7 @@ func main() {
 	C.lgw_rxif_setconf(C.uint8_t(9), C.struct_lgw_conf_rxif_s{
 		enable:    true,
 		rf_chain:  1,
-		freq_hz:   30000,
+		freq_hz:   300000,
 		bandwidth: C.BW_125KHZ,
 		datarate:  50000,
 	})
