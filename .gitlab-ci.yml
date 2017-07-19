@@ -4,6 +4,9 @@ stages:
 before_script:
   - apt update -y && apt install git -y
   - git clone https://github.com/TheThingsNetwork/lora_gateway.git
+  # Creating release path
+  - mkdir release
+  - export RELEASE_PATH="$PWD/release"
 
 multitech-conduit-golang:
   stage: build
@@ -12,8 +15,6 @@ multitech-conduit-golang:
     - export CFG_SPI=ftdi
     - export PLATFORM=multitech
     - pushd go
-    # Creating release path
-    - mkdir release
     # Go build environment variables
     - export GOROOT=$PWD/go
     - export GOPATH=$PWD/gopath
@@ -30,7 +31,7 @@ multitech-conduit-golang:
     - popd
     # Go to packet forwarder file
     - CGO_ENABLED=1 GOARCH=arm GOARM=5 go build -o benchmark -v
-    - cp benchmark release
+    - cp benchmark "$RELEASE_PATH"
     - popd
   artifacts:
     paths:
