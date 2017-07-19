@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/k0kubun/pp"
 )
 
 // #cgo CFLAGS: -I${SRCDIR}/../lora_gateway/libloragw/inc
@@ -50,6 +52,8 @@ func main() {
 		clksrc:         C.uint8_t(0),
 		lorawan_public: C.bool(true),
 	}
+	fmt.Println("Board configuration:")
+	pp.Println(boardConf)
 	C.lgw_board_setconf(boardConf)
 
 	// Setting TX Gain
@@ -89,6 +93,8 @@ func main() {
 	}
 	gainLut.size = C.uint8_t(len(txLuts))
 
+	fmt.Println("TX gain tables:")
+	pp.Println(gainLut)
 	C.lgw_txgain_setconf(&gainLut)
 
 	int1 := 863000000
@@ -104,7 +110,8 @@ func main() {
 		if err != nil {
 			continue
 		}
-
+		fmt.Println("Radio", index, ":")
+		pp.Println(cRadio)
 		C.lgw_rxrf_setconf(C.uint8_t(nbRadio), cRadio)
 	}
 
@@ -129,29 +136,37 @@ func main() {
 			rf_chain: C.uint8_t(channel.Radio),
 			freq_hz:  C.int32_t(channel.IfValue),
 		}
-
+		fmt.Println("Channel", index, ":")
+		pp.Println(cChannel)
 		C.lgw_rxif_setconf(C.uint8_t(index), cChannel)
 	}
 
 	// Setting LoRa channel
-	C.lgw_rxif_setconf(C.uint8_t(8), C.struct_lgw_conf_rxif_s{
+	LoRaChannel := C.struct_lgw_conf_rxif_s{
 		enable:    true,
 		rf_chain:  1,
 		freq_hz:   -200000,
 		bandwidth: C.BW_250KHZ,
 		datarate:  C.DR_UNDEFINED,
-	})
+	}
+	fmt.Println("LoRa channel:")
+	pp.Println(LoRaChannel)
+	C.lgw_rxif_setconf(C.uint8_t(8), LoRaChannel)
 
 	// Setting FSK channel
-	C.lgw_rxif_setconf(C.uint8_t(9), C.struct_lgw_conf_rxif_s{
+	fsk := C.struct_lgw_conf_rxif_s{
 		enable:    true,
 		rf_chain:  1,
 		freq_hz:   30000,
 		bandwidth: C.BW_125KHZ,
 		datarate:  50000,
-	})
+	}
+	fmt.Println("FSK channel:")
+	pp.Println(fsk)
+	C.lgw_rxif_setconf(C.uint8_t(9), fsk)
 
 	// Start
+	fmt.Println("Starting concentrator:")
 	if C.lgw_start() != C.LGW_HAL_SUCCESS {
 		fmt.Println("Concentrator start unsuccessful")
 		return
