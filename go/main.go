@@ -157,7 +157,7 @@ func main() {
 	fsk := C.struct_lgw_conf_rxif_s{
 		enable:    true,
 		rf_chain:  1,
-		freq_hz:   30000,
+		freq_hz:   300000,
 		bandwidth: C.BW_125KHZ,
 		datarate:  50000,
 	}
