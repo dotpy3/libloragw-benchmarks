@@ -110,7 +110,7 @@ func main() {
 		if err != nil {
 			continue
 		}
-		fmt.Println("Radio", index, ":")
+		fmt.Println("Radio", nbRadio, ":")
 		pp.Println(cRadio)
 		C.lgw_rxrf_setconf(C.uint8_t(nbRadio), cRadio)
 	}
