@@ -30,6 +30,7 @@ multitech-conduit-golang:
     - make all
     - popd
     # Go to packet forwarder file
+    - go get github.com/k0kubun/pp
     - CGO_ENABLED=1 GOARCH=arm GOARM=5 go build -o benchmark -v
     - cp benchmark "$RELEASE_PATH"
     - popd
