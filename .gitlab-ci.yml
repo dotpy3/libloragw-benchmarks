@@ -1,0 +1,29 @@
+stages:
+  - build
+
+multitech-conduit-golang:
+  stage: build
+  image: registry.gitlab.com/thethingsnetwork/packet_forwarder/multitech-toolchain
+  script:
+    - pushd go
+    # Creating release path
+    - mkdir release
+    # Go build environment variables
+    - export GOROOT=$PWD/go
+    - export GOPATH=$PWD/gopath
+    - export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    # Downloading go if not installed yet
+    - apt update -y && apt install make git tar -y
+    - "([[ ! $(go version) =~ \"version\" ]] && apt-get install wget -y && wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz && tar -C $PWD -xvzf go1.8.1.linux-amd64.tar.gz) || echo \"Expected Go toolset available in cache\""
+    # Remove the toolchain's CFLAGS
+    - "sed 's/.*CFLAGS.*//g' /opt/mlinux/3.2.0/environment-setup-arm926ejste-mlinux-linux-gnueabi  -i.bak"
+    # Enable mLinux toolchain
+    - sdk_enable_file=$(ls /opt/mlinux/*/*setup*)
+    - source $sdk_enable_file
+    # Go to packet forwarder file
+    - go build -o benchmark
+    - cp benchmark release
+    - popd
+  artifacts:
+    paths:
+      - release/
