@@ -13,6 +13,8 @@ import (
 // #include "loragw_gps.h"
 import "C"
 
+const NbMaxPackets = 8
+
 func main() {
 	// Configuration
 	nbCycles := 1000
@@ -155,7 +157,6 @@ func main() {
 		return
 	}
 
-	NbMaxPackets := 8
 	for i := 0; i < nbCycles; i++ {
 		for j := 0; j < nbUplinkCycle; j++ {
 			var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
