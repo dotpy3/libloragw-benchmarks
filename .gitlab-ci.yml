@@ -3,7 +3,7 @@ stages:
 
 before_script:
   - apt update -y && apt install git -y
-  - git clone git@github.com:TheThingsNetwork/lora_gateway.git
+  - git clone https://github.com/TheThingsNetwork/lora_gateway.git
 
 multitech-conduit-golang:
   stage: build
