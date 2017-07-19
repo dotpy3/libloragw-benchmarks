@@ -1,6 +1,6 @@
 # HAL Benchmarks
 
-The purpose of this repository is to make performance tests on how different setups (pure C calls, Go + Cgo calls, ...) perform to call the Semtech `lora_gateway` HAL.
+The purpose of this repository is to make performance tests on how different setups (pure C calls, Go + Cgo calls, ...) perform to call the Semtech `lora_gateway` HAL. The calls are configured for a **Multitech Conduit** with **FTDI link**, on the **Europe LoRaWAN frequency plans**.
 
 It contains 3 different tests:
 

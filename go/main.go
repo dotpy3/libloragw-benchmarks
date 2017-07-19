@@ -47,7 +47,7 @@ func main() {
 
 	// Setting board
 	var boardConf = C.struct_lgw_conf_board_s{
-		clksrc:         C.uint8_t(1),
+		clksrc:         C.uint8_t(0),
 		lorawan_public: C.bool(true),
 	}
 	C.lgw_board_setconf(boardConf)
