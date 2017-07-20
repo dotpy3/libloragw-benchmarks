@@ -20,7 +20,7 @@ multitech-conduit-golang:
     - export GOPATH=$PWD/gopath
     - export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
     # Downloading go if not installed yet
-    - apt install make git tar wget libftdi-dev -y
+    - apt install make git tar wget -y
     - apt-get install wget -y && wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz && tar -C $PWD -xvzf go1.8.1.linux-amd64.tar.gz
     # Enable mLinux toolchain
     - sdk_enable_file=$(ls /opt/mlinux/*/*setup*)
