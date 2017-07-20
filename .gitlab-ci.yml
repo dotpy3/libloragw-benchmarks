@@ -7,6 +7,7 @@ before_script:
   # Creating release path
   - mkdir release
   - export RELEASE_PATH="$PWD/release"
+  - export ROOT_FOLDER="$PWD"
 
 multitech-conduit-golang:
   stage: build
@@ -46,12 +47,12 @@ multitech-conduit-c:
     - sdk_enable_file=$(ls /opt/mlinux/*/*setup*)
     - source $sdk_enable_file
     # Compile libloragw
-    - pushd lora_gateway/libloragw
+    - pushd $ROOT_FOLDER/lora_gateway/libloragw
     - make all
     - popd
     # Compile benchmark
     - pushd c
-    - $GCC -I../lora_gateway/libloragw/inc benchmark.c -L../lora_gateway/libloragw -lloragw -o "$RELEASE_PATH/benchmark-c"
+    - $GCC -I$ROOT_FOLDER/lora_gateway/libloragw/inc benchmark.c -L$ROOT_FOLDER/lora_gateway/libloragw -lloragw -o "$RELEASE_PATH/benchmark-c"
     - popd
   artifacts:
     paths:
