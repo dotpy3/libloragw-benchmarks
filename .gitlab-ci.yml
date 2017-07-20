@@ -30,8 +30,20 @@ multitech-conduit-golang:
     - make all
     - popd
     # Go to packet forwarder file
-    - CGO_ENABLED=1 GOARCH=arm GOARM=5 go build -o benchmark -v
+    - CGO_ENABLED=1 GOARCH=arm GOARM=5 go build -o benchmark-go -v
     - cp benchmark "$RELEASE_PATH"
+    - popd
+  artifacts:
+    paths:
+      - release/
+
+multitech-conduit-c:
+  stage: build
+  image: debian:latest
+  script:
+    - apt install build-essential -y
+    - pushd c
+    - gcc -I../lora_gateway/libloragw/inc benchmark.c -L../lora_gateway/libloragw -lloragw -o "$RELEASE_PATH/benchmark-c"
     - popd
   artifacts:
     paths:
