@@ -12,8 +12,8 @@ multitech-conduit-golang:
   stage: build
   image: registry.gitlab.com/thethingsnetwork/packet_forwarder/multitech-toolchain
   script:
-    - export CFG_SPI=ftdi
-    - export PLATFORM=multitech
+    - sed -i.bak 's/CFG_SPI.*/CFG_SPI=ftdi/g' lora_gateway/libloragw/library.cfg
+    - sed -i.bak2 's/PLATFORM.*/PLATFORM=multitech/g' lora_gateway/libloragw/library.cfg
     - pushd go
     # Go build environment variables
     - export GOROOT=$PWD/go
