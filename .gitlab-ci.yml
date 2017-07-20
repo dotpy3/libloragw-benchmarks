@@ -39,9 +39,9 @@ multitech-conduit-golang:
 
 multitech-conduit-c:
   stage: build
-  image: debian:latest
+  image: registry.gitlab.com/thethingsnetwork/packet_forwarder/multitech-toolchain
   script:
-    - apt install build-essential -y
+    - apt install make -y
     # Enable mLinux toolchain
     - sdk_enable_file=$(ls /opt/mlinux/*/*setup*)
     - source $sdk_enable_file
