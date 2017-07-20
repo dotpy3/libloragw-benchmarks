@@ -121,23 +121,25 @@ func prepare() {
 
 func main() {
 	prepare()
-	run(100000)
-}
-
-func run(times int) {
-
-	// Start
-	if C.lgw_start() != C.LGW_HAL_SUCCESS {
+	if start() != C.LGW_HAL_SUCCESS {
 		fmt.Println("Concentrator start unsuccessful")
 		return
 	}
+	run(100000)
+	stop()
+}
 
+func start() C.uint8_t {
+	return C.lgw_start()
+}
+
+func stop() {
+	C.lgw_stop()
+}
+
+func run(times int) {
 	var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
 	for i := 0; i < times; i++ {
 		C.lgw_receive(NbMaxPackets, &packets[0])
 	}
-
-	// Stop
-	fmt.Println("Stopping concentrator...")
-	C.lgw_stop()
 }
