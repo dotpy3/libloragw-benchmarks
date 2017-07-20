@@ -14,8 +14,9 @@ int main() {
 
     // Setting board
     struct lgw_conf_board_s board_conf;
-    board_conf.clksrc = 8;
+    board_conf.clksrc = 0;
     board_conf.lorawan_public = 1;
+    lgw_board_setconf(board_conf);
 
     // Setting TX Gain
     struct lgw_tx_gain_lut_s gain_lut;

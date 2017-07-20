@@ -48,6 +48,8 @@ multitech-conduit-c:
     - source $sdk_enable_file
     # Compile libloragw
     - pushd $ROOT_FOLDER/lora_gateway/libloragw
+    - sed -i.bak 's/CFG_SPI.*/CFG_SPI=ftdi/g' library.cfg
+    - sed -i.bak2 's/PLATFORM.*/PLATFORM=multitech/g' library.cfg
     - make all
     - popd
     # Compile benchmark
