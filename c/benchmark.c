@@ -106,18 +106,10 @@ int main() {
     }
 
     // Loop
-    time_t start;
-    start = time(NULL);
-    long unsigned nb_cycles_executed = 0;
-    while (time(NULL) < (start + 2 * 60)) {
-        for (i = 0; i < 10; i++) {
-            struct lgw_pkt_rx_s packets[8];
-            lgw_receive(8, packets);
-        }
-        nb_cycles_executed++;
+    struct lgw_pkt_rx_s packets[8];
+    for (i = 0; i < 10000; i++) {
+        lgw_receive(8, packets);
     }
-
-    printf("Number of cycles executed: %lu\n", nb_cycles_executed);
 
     // Stop
     lgw_stop();

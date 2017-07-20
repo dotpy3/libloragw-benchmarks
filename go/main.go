@@ -15,11 +15,6 @@ import "C"
 const NbMaxPackets = 8
 
 func main() {
-	var nbCyclesDone uint64
-
-	// Configuration
-	nbUplinkCycle := 10
-
 	// Setting board
 	var boardConf = C.struct_lgw_conf_board_s{
 		clksrc:         C.uint8_t(0),
@@ -140,22 +135,10 @@ func main() {
 		stopChannel <- true
 	}()
 
-cyclesLoop:
-	for {
-		select {
-		case <-stopChannel:
-			break cyclesLoop
-		default:
-			for j := 0; j < nbUplinkCycle; j++ {
-				var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
-				C.lgw_receive(NbMaxPackets, &packets[0])
-			}
-			// No downlinks for the moment
-			nbCyclesDone = nbCyclesDone + 1
-		}
+	var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
+	for i := 0; i < 10000; i++ {
+		C.lgw_receive(NbMaxPackets, &packets[0])
 	}
-
-	fmt.Println("Number of cycles executed:", nbCyclesDone)
 
 	// Stop
 	fmt.Println("Stopping concentrator...")
