@@ -122,6 +122,11 @@ func prepare() {
 	})
 }
 
+func main() {
+	prepare()
+	run(100000)
+}
+
 func run(times int) {
 
 	// Start
