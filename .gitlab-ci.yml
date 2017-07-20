@@ -42,6 +42,14 @@ multitech-conduit-c:
   image: debian:latest
   script:
     - apt install build-essential -y
+    # Enable mLinux toolchain
+    - sdk_enable_file=$(ls /opt/mlinux/*/*setup*)
+    - source $sdk_enable_file
+    # Compile libloragw
+    - pushd lora_gateway/libloragw
+    - make all
+    - popd
+    # Compile benchmark
     - pushd c
     - $GCC -I../lora_gateway/libloragw/inc benchmark.c -L../lora_gateway/libloragw -lloragw -o "$RELEASE_PATH/benchmark-c"
     - popd
