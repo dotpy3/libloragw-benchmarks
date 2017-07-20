@@ -94,7 +94,7 @@ int main() {
     fsk_channel.rf_chain = 1;
     fsk_channel.freq_hz = 300000;
     fsk_channel.bandwidth = BW_125KHZ;
-    lora_channel.datarate = 50000;
+    fsk_channel.datarate = 50000;
     lgw_rxif_setconf(9, fsk_channel);
 
     // Start
