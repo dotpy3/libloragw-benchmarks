@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"testing"
-)
+import "fmt"
 
 // #cgo CFLAGS: -I${SRCDIR}/../lora_gateway/libloragw/inc
 // #cgo LDFLAGS: -lm ${SRCDIR}/../lora_gateway/libloragw/libloragw.a -lmpsse -lrt
@@ -143,10 +140,4 @@ func run(times int) {
 	// Stop
 	fmt.Println("Stopping concentrator...")
 	C.lgw_stop()
-}
-
-func BenchmarkUplinks(b *testing.B) {
-	prepare()
-	b.ResetTimer()
-	run(b.N)
 }
