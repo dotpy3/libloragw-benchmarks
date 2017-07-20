@@ -22,7 +22,7 @@ The first benchmark consists of:
 * Starting retrieving uplinks for 2 minutes: we're counting the number of *cycles*, with 1 cycle = 10 uplink retrievals.
 * The score of a test is the number of cycles executed over a course of two minutes.
 
-We went for this setup because the tests were made in an environment where LoRa packets were emitted by a node, every ~5-10 seconds - going for 2 minutes would give us the right balance.
+We went for this setup because the tests were made in an environment where LoRa packets were emitted by a node, every ~5-10 seconds - going for 2 minutes would give us the right balance. The *cycles* system is to reduce the overhead of checking time/channel for every `lgw_receive` call.
 
 |Setup|Score|
 |-------|-------|
