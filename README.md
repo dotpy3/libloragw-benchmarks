@@ -8,13 +8,10 @@ It will contain 3 different tests:
 + Go + Cgo call
 + Rust call
 
-Every program is:
-
-+ Configuration of the SX1301 module
-+ Loop of:
-  + 10 receive
-  + 1 send downlink
-
 ## Generate benchmark binaries
 
 The easiest way to generate the benchmark binaries is to use [GitLab CI](https://gitlab.com), which works just like Travis CI if you've ever used it. Create your fork of the repo on GitLab, enable CI for this repo, enable a [Runner](https://docs.gitlab.com/runner/), then push the repo to GitLab - your Runner will execute the [GitLab CI file](.gitlab-ci.yml) and generate the binaries for you.
+
+## Results
+
+### Benchmark 1

@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
 	"time"
 )
 
@@ -21,30 +19,6 @@ func main() {
 
 	// Configuration
 	nbUplinkCycle := 10
-
-	args := os.Args
-	var err error
-	if len(args) >= 2 {
-		nbCycles, err = strconv.Atoi(args[1])
-		if err != nil {
-			panic(err)
-		}
-	}
-	fmt.Println("Number of cycles:", nbCycles)
-	if len(args) >= 3 {
-		nbUplinkCycle, err = strconv.Atoi(args[2])
-		if err != nil {
-			panic(err)
-		}
-	}
-	fmt.Println("Number of uplinks per cycles:", nbUplinkCycle)
-	if len(args) >= 4 {
-		nbUplinkCycle, err = strconv.Atoi(args[3])
-		if err != nil {
-			panic(err)
-		}
-	}
-	fmt.Println("Number of downlinks per cycle:", nbDownlinkCycle)
 
 	// Setting board
 	var boardConf = C.struct_lgw_conf_board_s{
