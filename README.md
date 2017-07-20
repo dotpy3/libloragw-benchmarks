@@ -15,6 +15,6 @@ Every program is:
   + 10 receive
   + 1 send downlink
 
-## Run benchmarks
+## Generate benchmark binaries
 
-1. Move to the directory of the repository, and download the `libloragw` source code: `git clone git@github.com:TheThingsNetwork/lora_gateway.git`
+The easiest way to generate the benchmark binaries is to use [GitLab CI](https://gitlab.com), which works just like Travis CI if you've ever used it. Create your fork of the repo on GitLab, enable CI for this repo, enable a [Runner](https://docs.gitlab.com/runner/), then push the repo to GitLab - your Runner will execute the [GitLab CI file](.gitlab-ci.yml) and generate the binaries for you.
