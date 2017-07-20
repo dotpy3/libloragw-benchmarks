@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 // #cgo CFLAGS: -I${SRCDIR}/../lora_gateway/libloragw/inc
@@ -16,10 +17,10 @@ import "C"
 const NbMaxPackets = 8
 
 func main() {
+	var nbCyclesDone uint64
+
 	// Configuration
-	nbCycles := 1000
 	nbUplinkCycle := 10
-	nbDownlinkCycle := 2
 
 	args := os.Args
 	var err error
@@ -157,14 +158,32 @@ func main() {
 		return
 	}
 
-	for i := 0; i < nbCycles; i++ {
-		for j := 0; j < nbUplinkCycle; j++ {
-			var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
-			C.lgw_receive(NbMaxPackets, &packets[0])
+	stopChannel := make(chan bool)
+	go func() {
+		time.Sleep(1 * time.Minute)
+		fmt.Println("1 minute passed...")
+		time.Sleep(1 * time.Minute)
+		stopChannel <- true
+	}()
+
+cyclesLoop:
+	for {
+		select {
+		case <-stopChannel:
+			break cyclesLoop
+		default:
+			for j := 0; j < nbUplinkCycle; j++ {
+				var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
+				C.lgw_receive(NbMaxPackets, &packets[0])
+			}
+			// No downlinks for the moment
+			nbCyclesDone = nbCyclesDone + 1
 		}
-		// No downlinks for the moment
 	}
 
+	fmt.Println("Number of cycles executed:", nbCyclesDone)
+
 	// Stop
+	fmt.Println("Stopping concentrator...")
 	C.lgw_stop()
 }
