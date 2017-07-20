@@ -121,7 +121,7 @@ func prepare() {
 
 func main() {
 	prepare()
-	if start() != C.LGW_HAL_SUCCESS {
+	if !start() {
 		fmt.Println("Concentrator start unsuccessful")
 		return
 	}
@@ -129,8 +129,8 @@ func main() {
 	stop()
 }
 
-func start() C.int {
-	return C.lgw_start()
+func start() bool {
+	return C.lgw_start() == C.LGW_HAL_SUCCESS
 }
 
 func stop() {

@@ -7,7 +7,7 @@ import (
 
 func BenchmarkUplinks(b *testing.B) {
 	prepare()
-	if start() != C.LGW_HAL_SUCCESS {
+	if !start() {
 		fmt.Println("Concentrator start unsuccessful")
 		b.FailNow()
 	}
