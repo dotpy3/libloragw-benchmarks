@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "config.h"
 #include "loragw_hal.h"
 #include "loragw_gps.h"
@@ -105,6 +106,18 @@ int main() {
     }
 
     // Loop
+    time_t start;
+    start = time(NULL);
+    uint64_t nb_cycles_executed = 0;
+    while (time(NULL) < (start + 2 * 60)) {
+        for (i = 0; i < 10; i++) {
+            struct lgw_pkt_rx_s packets[8];
+            lgw_receive(8, packets);
+        }
+        nb_cycles_executed++;
+    }
+
+    printf("Number of cycles executed: %d\n", nb_cycles_executed)
 
     // Stop
     lgw_stop();
