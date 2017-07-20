@@ -117,7 +117,7 @@ int main() {
         nb_cycles_executed++;
     }
 
-    printf("Number of cycles executed: %d\n", nb_cycles_executed)
+    printf("Number of cycles executed: %d\n", nb_cycles_executed);
 
     // Stop
     lgw_stop();
