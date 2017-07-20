@@ -5,7 +5,7 @@ The purpose of this repository is to make performance tests on how different set
 It will contain 3 different tests:
 
 + Pure C call
-+ Go + Cgo call
++ Go + Cgo call (located in the [go](go/) folder)
 + Rust call
 
 ## Generate benchmark binaries
@@ -15,3 +15,17 @@ The easiest way to generate the benchmark binaries is to use [GitLab CI](https:/
 ## Results
 
 ### Benchmark 1
+
+The first benchmark consists of:
+
+* Configuration of the SX1301 chip: board configuration, channel configuration... with a **hardcoded configuration**.
+* Starting retrieving uplinks for 2 minutes: we're counting the number of *cycles*, with 1 cycle = 10 uplink retrievals.
+* The score of a test is the number of cycles executed over a course of two minutes.
+
+We went for this setup because the tests were made in an environment where LoRa packets were emitted by a node, every ~5-10 seconds - going for 2 minutes would give us the right balance.
+
+|Setup|Score|
+|-------|-------|
+|Go|4567 cycles executed|
+|C||
+|Rust||
