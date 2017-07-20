@@ -54,11 +54,11 @@ int main() {
     radio0.tx_enable = 1;
     radio0.type = LGW_RADIO_TYPE_SX1257;
     struct lgw_conf_rxrf_s radio1;
-    radio0.enable = 1;
-    radio0.freq_hz = 868500000;
-    radio0.rssi_offset = -166;
-    radio0.tx_enable = 0;
-    radio0.type = LGW_RADIO_TYPE_SX1257;
+    radio1.enable = 1;
+    radio1.freq_hz = 868500000;
+    radio1.rssi_offset = -166;
+    radio1.tx_enable = 0;
+    radio1.type = LGW_RADIO_TYPE_SX1257;
     lgw_rxrf_setconf(0, radio0);
     lgw_rxrf_setconf(1, radio1);
 
@@ -88,10 +88,10 @@ int main() {
 
     // Setting FSK channel
     struct lgw_conf_rxif_s fsk_channel;
-    lora_channel.enable = 1;
-    lora_channel.rf_chain = 1;
-    lora_channel.freq_hz = 300000;
-    lora_channel.bandwidth = BW_125KHZ;
+    fsk_channel.enable = 1;
+    fsk_channel.rf_chain = 1;
+    fsk_channel.freq_hz = 300000;
+    fsk_channel.bandwidth = BW_125KHZ;
     lora_channel.datarate = 50000;
     lgw_rxif_setconf(9, fsk_channel);
 
