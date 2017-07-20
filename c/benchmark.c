@@ -74,6 +74,8 @@ int main() {
             channels[i].rf_chain = 0;
         }
         channels[i].freq_hz = if_values[i];
+        channels[i].bandwidth = BW_UNDEFINED;
+        channels[i].datarate = DR_UNDEFINED;
         lgw_rxif_setconf(i, channels[i]);
     }
 
