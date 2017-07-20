@@ -31,7 +31,7 @@ multitech-conduit-golang:
     - make all
     - popd
     # Go to packet forwarder file
-    - CGO_ENABLED=1 GOARCH=arm GOARM=5 go build -o benchmark-go -v
+    - CGO_ENABLED=1 GOARCH=arm GOARM=5 go test -bench . -c -o benchmark-go -v
     - cp benchmark-go "$RELEASE_PATH"
     - popd
   artifacts:

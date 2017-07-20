@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"testing"
 )
 
 // #cgo CFLAGS: -I${SRCDIR}/../lora_gateway/libloragw/inc
@@ -14,7 +14,7 @@ import "C"
 
 const NbMaxPackets = 8
 
-func main() {
+func prepare() {
 	// Setting board
 	var boardConf = C.struct_lgw_conf_board_s{
 		clksrc:         C.uint8_t(0),
@@ -120,6 +120,9 @@ func main() {
 		bandwidth: C.BW_125KHZ,
 		datarate:  50000,
 	})
+}
+
+func run(int times) {
 
 	// Start
 	if C.lgw_start() != C.LGW_HAL_SUCCESS {
@@ -127,20 +130,18 @@ func main() {
 		return
 	}
 
-	stopChannel := make(chan bool)
-	go func() {
-		time.Sleep(1 * time.Minute)
-		fmt.Println("1 minute passed...")
-		time.Sleep(1 * time.Minute)
-		stopChannel <- true
-	}()
-
 	var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < times; i++ {
 		C.lgw_receive(NbMaxPackets, &packets[0])
 	}
 
 	// Stop
 	fmt.Println("Stopping concentrator...")
 	C.lgw_stop()
+}
+
+func BenchmarkUplinks(b *testing.B) {
+	prepare()
+	b.ResetTimer()
+	run(b.N)
 }

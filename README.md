@@ -19,13 +19,12 @@ The easiest way to generate the benchmark binaries is to use [GitLab CI](https:/
 The first benchmark consists of:
 
 * Configuration of the SX1301 chip: board configuration, channel configuration... with a **hardcoded configuration**.
-* Starting retrieving uplinks for 2 minutes: we're counting the number of *cycles*, with 1 cycle = 10 uplink retrievals.
-* The score of a test is the number of cycles executed over a course of two minutes.
+* Starting retrieving uplinks by calling `lgw_receive` 100 000 times.
 
-We went for this setup because the tests were made in an environment where LoRa packets were emitted by a node, every ~5-10 seconds - going for 2 minutes would give us the right balance. The *cycles* system is to reduce the overhead of checking time/channel for every `lgw_receive` call.
+We went for this setup because the tests were made in an environment where LoRa packets were emitted by a node, every ~5-10 seconds - going for 100 000 times would give us the right balance.
 
 |Setup|Score|
 |-------|-------|
-|Go|4567 cycles executed|
-|C||
+|Go|`real: 6m21.293s` - `user: 1m20.770s` - `sys: 3m39.150s`|
+|C|`real: 4m7.490s` - `user: 0m41.930s` - `sys: 2m7.410s`|
 |Rust||
