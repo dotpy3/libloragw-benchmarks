@@ -107,7 +107,7 @@ int main() {
 
     // Loop
     struct lgw_pkt_rx_s packets[8];
-    for (i = 0; i < 10000; i++) {
+    for (i = 0; i < 100000; i++) {
         lgw_receive(8, packets);
     }
 

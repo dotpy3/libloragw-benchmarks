@@ -136,7 +136,7 @@ func main() {
 	}()
 
 	var packets [NbMaxPackets]C.struct_lgw_pkt_rx_s
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 100000; i++ {
 		C.lgw_receive(NbMaxPackets, &packets[0])
 	}
 
