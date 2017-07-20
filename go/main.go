@@ -122,7 +122,7 @@ func prepare() {
 	})
 }
 
-func run(int times) {
+func run(times int) {
 
 	// Start
 	if C.lgw_start() != C.LGW_HAL_SUCCESS {
