@@ -129,7 +129,7 @@ func main() {
 	stop()
 }
 
-func start() C.uint8_t {
+func start() C.int {
 	return C.lgw_start()
 }
 
