@@ -43,7 +43,7 @@ multitech-conduit-c:
   script:
     - apt install build-essential -y
     - pushd c
-    - gcc -I../lora_gateway/libloragw/inc benchmark.c -L../lora_gateway/libloragw -lloragw -o "$RELEASE_PATH/benchmark-c"
+    - $GCC -I../lora_gateway/libloragw/inc benchmark.c -L../lora_gateway/libloragw -lloragw -o "$RELEASE_PATH/benchmark-c"
     - popd
   artifacts:
     paths:
